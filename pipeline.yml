@@ -1,0 +1,45 @@
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+- name: solution
+  value: '**/*.sln'
+- name: BuildPlatform
+  value: 'x64'
+- name: buildConfiguration
+  value: 'Release'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    version: 6.x
+    performMultiLevelLookup: true
+    includePreviewVersions: true # Required for preview versions
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    command: 'restore'
+    projects: '$(solution)'
+
+- task: VSBuild@1
+  displayName: 'Building app...'
+  inputs:
+    solution: '$(solution)'
+    platform: 'x64'
+    configuration: '$(buildConfiguration)'
+    logFileVerbosity: diagnostic
+    msbuildArgs: >
+        /bl:$(Build.ArtifactStagingDirectory)\output.binlog;ProjectImports=ZipFile
+        /p:AppxPackageDir="$(Build.ArtifactStagingDirectory)\AppxPackages\\"
+        /p:UapAppxPackageBuildMode=SideloadOnly
+        /p:AppxBundlePlatforms="$(BuildPlatform)"
+        /p:AppxBundle=Always
+        /p:AppxPackageSigningEnabled=false 
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publishing artifacts'
+  condition: always()
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'

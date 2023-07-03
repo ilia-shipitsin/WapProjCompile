@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<UseWPF>true</UseWPF>
+		<RuntimeIdentifiers>win-x64;win10-x64</RuntimeIdentifiers>
+		<TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+		<SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+		<Platforms>x64</Platforms>
+	</PropertyGroup>
+
+</Project>
