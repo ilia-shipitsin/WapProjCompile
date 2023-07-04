@@ -24,6 +24,17 @@ steps:
     projects: '$(solution)'
 
 - task: VSBuild@1
+  displayName: 'Restoring for win-x64...'
+  inputs:
+    solution: '$(solution)'
+    platform: 'x64'
+    configuration: 'Release'
+    logFileVerbosity: diagnostic
+    msbuildArgs: >
+        /p:RuntimeIdentifier=win-x64
+        /t:Restore
+
+- task: VSBuild@1
   displayName: 'Building app...'
   inputs:
     solution: '$(solution)'
