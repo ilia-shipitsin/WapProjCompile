@@ -28,15 +28,10 @@ steps:
   inputs:
     solution: '$(solution)'
     platform: 'x64'
-    configuration: '$(buildConfiguration)'
+    configuration: 'Release'
     logFileVerbosity: diagnostic
     msbuildArgs: >
         /bl:$(Build.ArtifactStagingDirectory)\output.binlog;ProjectImports=ZipFile
-        /p:AppxPackageDir="$(Build.ArtifactStagingDirectory)\AppxPackages\\"
-        /p:UapAppxPackageBuildMode=SideloadOnly
-        /p:AppxBundlePlatforms="$(BuildPlatform)"
-        /p:AppxBundle=Always
-        /p:AppxPackageSigningEnabled=false
         /p:Platform=x64
 
 - task: PublishBuildArtifacts@1
