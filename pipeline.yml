@@ -24,7 +24,7 @@ steps:
     projects: '$(solution)'
 
 - task: VSBuild@1
-  displayName: 'Restoring for win-x64...'
+  displayName: 'Restoring ...'
   inputs:
     solution: '$(solution)'
     platform: 'x64'
@@ -32,6 +32,17 @@ steps:
     logFileVerbosity: diagnostic
     msbuildArgs: >
         /bl:$(Build.ArtifactStagingDirectory)\restore.binlog
+        /t:Restore
+
+- task: VSBuild@1
+  displayName: 'Restoring for win-x64...'
+  inputs:
+    solution: '$(solution)'
+    platform: 'x64'
+    configuration: 'Release'
+    logFileVerbosity: diagnostic
+    msbuildArgs: >
+        /bl:$(Build.ArtifactStagingDirectory)\restore-win-x64.binlog
         /p:RuntimeIdentifier=win-x64
         /t:Restore
 
