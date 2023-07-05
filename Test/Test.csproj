@@ -8,4 +8,8 @@
 		<Platforms>x64</Platforms>
 	</PropertyGroup>
 
+  <Target Name="DisplayRuntimeIdentifier" AfterTargets="Restore">
+    <Message Text="DisplayRuntimeIdentifier=$(RuntimeIdentifier)" Importance="High" />
+  </Target>
+
 </Project>
